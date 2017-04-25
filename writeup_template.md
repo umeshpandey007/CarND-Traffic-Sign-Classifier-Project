@@ -54,7 +54,9 @@ To explore the image, I decided to plot a random image and also print the corres
 
 ####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-I decided to keep the keep the image as a RGB image and train the model. Howevever I normalized the image with mean 0 and equal variance by performing (pixel -128)/128 operation. I also did not added dummy images or appended any extra images to experiment with the model when sufficient data is not present.
+I decided to keep the keep the image as a RGB image and train the model. Since the input images can have different range of pixel values, it is better to apply normalization. Also, the learning rate used in the optimizer is same for all the input features(dimensions), hence it is better to have all the values of the input pixels in all dimensions to also be in the same range which helps during the gradeint descent process. For the current training images, normalization is applied with mean 0 and equal variance by performing (pixel -128)/128 operation.
+
+I also did not added dummy images or appended any extra images to experiment with the model when sufficient data is not present.
 
 ####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
@@ -133,6 +135,8 @@ Here are five German traffic signs that I found on the web:
 
 ![Right of way at next intersection][image2] ![Road Work][image3] ![Speed 60][image4] 
 ![Stop Sign][image5] ![Roundabout][image6]
+
+Image like 60km/hr sign when rescaled can have problems as it appears to be taken at a different angle as compared to other images which don't seem to have any angular distortions. The other features like presence of other external factors like trees, railings, background as in case of Stop sign might make it difficult to classify. After resizing the images, without maintaining the aspect ratio, might result in some extraneous features to be falsely used in training amd also impact the training process.
 
 I tried cv2 package to scale the images in the code, but seems for RGB image, the cv2.resize function did not work well. Hence to resize the image to 32x32x3, I used an external image editor to resixe the image appropriately.
 
